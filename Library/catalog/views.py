@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
+from django.contrib.auth import logout
+import templates
 
 def index(request):
     num_books=Book.objects.all().count()
@@ -26,4 +28,10 @@ class BookDetailView(generic.DetailView):
 
 class AuthorDetailView(generic.DetailView):
     model = Author
-    
+
+def logout_view(request):
+    logout(request)
+    return redirect('logged_out')
+
+def logged_out_view(request):
+    return render(request, './registration/logged_out.html')
