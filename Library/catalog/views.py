@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.contrib.auth import logout
-import templates
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def index(request):
     num_books=Book.objects.all().count()
@@ -35,3 +35,12 @@ def logout_view(request):
 
 def logged_out_view(request):
     return render(request, './registration/logged_out.html')
+
+
+class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
+    model = BookInstance
+    template_name ='catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
