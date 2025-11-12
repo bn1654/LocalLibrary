@@ -32,6 +32,9 @@ class Book(models.Model):
     def display_genre(self):
         return ', '.join([ genre.name for genre in self.genre.all()[:3] ])
     display_genre.short_description = 'Genre'
+    
+    class Meta:
+        permissions = (("can_add_book", "Can add a book"),("can_delete_book", "Can delete a book"),("can_update_book", "Can change a book"),)
 
 
 class BookInstance(models.Model):
@@ -76,4 +79,7 @@ class Author(models.Model):
 
     def __str__(self):
         return '%s, %s' % (self.last_name, self.first_name)
+
+    class Meta:
+        permissions = (("can_add_author", "Can add an author"),("can_delete_author", "Can delete an author"),("can_update_author", "Can change an author"),)
 
