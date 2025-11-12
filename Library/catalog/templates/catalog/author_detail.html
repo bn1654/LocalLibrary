@@ -6,6 +6,13 @@
   <p><strong>Родился:</strong> {{ author.date_of_birth }}</p>
   {% if author.date_of_death %}<p><strong>Умер:</strong> {{ author.date_of_death }}</p>{% endif %}
 
+  {% if perms.catalog.can_update_author %}
+  <p><a href="{% url 'author_update' author.pk %}"> Редактировать </a></p>
+  {% endif %}
+  {% if perms.catalog.can_delete_author %}
+  <p><a href="{% url 'author_delete' author.pk %}"> Удалить </a></p>
+  {% endif %}
+
   <div style="margin-left:20px;margin-top:20px">
     <h4>Книги</h4>
 

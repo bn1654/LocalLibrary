@@ -8,6 +8,12 @@
   <p><strong>ISBN:</strong> {{ book.ISBN }}</p>
   <p><strong>Язык:</strong> {{ book.language }}</p>
   <p><strong>Жанр:</strong> {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  {% if perms.catalog.can_add_book %}
+  <p><a href="{% url 'book_update' book.pk %}"> Редактировать </a></p>
+  {% endif %}
+  {% if perms.catalog.can_delete_book %}
+  <p><a href="{% url 'book_delete' book.pk %}"> Удалить </a></p>
+  {% endif %}
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Копии</h4>
