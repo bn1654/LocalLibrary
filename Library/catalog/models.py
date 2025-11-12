@@ -17,7 +17,7 @@ class Language(models.Model):
         return self.name
 
 class Book(models.Model):
-    title = models.CharField(verbose_name='Название', max_length=200)
+    title = models.CharField(verbose_name='title', max_length=200)
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     summary = models.TextField(max_length=1000, help_text="Введите краткое описание книги")
     ISBN = models.CharField('ISBN', max_length=13, help_text='13 символьное <a href="https://www.isbn-international.org/content/what-isbn">ISBN число</a>')
@@ -71,7 +71,7 @@ class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('Умер', null=True, blank=True)
+    date_of_death = models.DateField('died', null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('author-detail', args=[str(self.id)])
